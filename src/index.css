@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+html.dark body {
+  background-color: #1a202c;
+  color: #f7fafc
+}
+
+html.dark nav {
+  background-color: #2d3748;
+}
+
+html.dark nav a {
+  color: #f7fafc;
+}
+
+html.dark .card {
+  background-color: #2d3748;
+}
+
+body,
+nav,
+.card {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
