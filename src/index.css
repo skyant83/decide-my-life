@@ -30,8 +30,12 @@ html.dark .card {
   background-color: #2d3748;
 }
 
+html.dark .front {
+  color: black;
+}
+
 body,
 nav,
 .card {
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 1s ease, color 1s ease;
 }
