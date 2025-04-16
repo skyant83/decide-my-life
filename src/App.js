@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
 // Navbar Component with Dark Mode Toggles
 function Navbar({ darkMode, toggleDarkMode }) {
@@ -38,17 +37,16 @@ function MainContent() {
   const items = textareaValue
     .split('\n')
 
-
   return (
     <main className="max-w-3xl mx-auto mt-12 px-4">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
         <h2 className="text-3xl font-semibold mb-4">Welcome to the Decide My Life Demo Site</h2>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-          You can type one item per line. Remove or edit directly — it updates live.
+          You can type one item per line. Remove or edit directly.
         </p>
 
         <textarea
-          rows={5}
+          rows={6}
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
           placeholder="Type one item per line..."
@@ -66,8 +64,6 @@ function MainContent() {
   );
 }
 
-
-
 // Footer Component
 function Footer() {
   return (
@@ -77,23 +73,30 @@ function Footer() {
   );
 }
 
+// App Component - combines everything into a full website
 function App() {
+  // Initialize darkMode state from localStorage
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prevMode => !prevMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen transition-colors duration-300 font-sans">
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <MainContent />
+      <Footer />
     </div>
   );
 }
