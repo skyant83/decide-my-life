@@ -48,7 +48,7 @@ function MainContent() {
         </p>
 
         <textarea
-          rows={6}
+          rows={5}
           value={textareaValue}
           onChange={(e) => setTextareaValue(e.target.value)}
           placeholder="Type one item per line..."
