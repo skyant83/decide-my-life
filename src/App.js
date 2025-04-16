@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// Navbar Component with Dark Mode Toggle
+// Navbar Component with Dark Mode Toggles
 function Navbar({ darkMode, toggleDarkMode }) {
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center sticky top-0 z-10 transition-colors duration-300">
