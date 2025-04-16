@@ -42,7 +42,7 @@ function MainContent() {
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
         <h2 className="text-3xl font-semibold mb-4">Welcome to the Decide My Life Demo Site</h2>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-          You can type one item per line. Remove or edit directly — it updates live.
+          You can type one item per line. Remove or edit directly.
         </p>
 
         <textarea
