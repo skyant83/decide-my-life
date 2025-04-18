@@ -12,31 +12,26 @@ code {
     monospace;
 }
 
-
 html.dark body {
   background-color: #1a202c;
-  color: #f7fafc
+  color: #e2e8f0; 
 }
 
 html.dark nav {
   background-color: #2d3748;
 }
 
-html.dark nav a {
-  color: #f7fafc;
+html.dark nav a, html.dark h1 {
+  color: #e2e8f0; 
 }
-
-html.dark h1 {
-  color: #f7fafc;
-}
-
 
 html.dark .card {
   background-color: #2d3748;
+  color: #e2e8f0; 
 }
 
 body,
 nav,
 .card {
-    transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

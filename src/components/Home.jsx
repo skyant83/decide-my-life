@@ -1,54 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function SpinTheWheel() {
-  const [textareaValue, setTextareaValue] = useState('');
-  const items = textareaValue.split('\n').filter((item) => item.trim() !== '');
-
-  const spinWheel = () => {
-    if (items.length === 0) {
-      alert('Please add items to spin the wheel!');
-      return;
-    }
-    const randomIndex = Math.floor(Math.random() * items.length);
-    alert(`The wheel landed on: ${items[randomIndex]}`);
-  };
-
+function Home() {
   return (
-    <main className="max-w-3xl mx-auto mt-12 px-4">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
-        <h2 className="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
-          Spin the Wheel
-        </h2>
-        <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
-          Add items below, one per line, and spin the wheel to make a decision!
-        </p>
-
-        <textarea
-          rows={6}
-          value={textareaValue}
-          onChange={(e) => setTextareaValue(e.target.value)}
-          placeholder="Type one item per line..."
-          className="w-full p-2 rounded border dark:bg-gray-700 dark:text-white resize-none"
-        />
-
-        <button
-          onClick={spinWheel}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    <main className="max-w-4xl mx-auto mt-12 px-4 text-center">
+      <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+        Welcome to Decide My Life!
+      </h1>
+      <p className="text-lg text-gray-600 dark:text-gray-200 mb-8">
+        Struggling to make decisions? Let us help you! Use our tools to spin the wheel or flip a coin and let fate decide for you.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Spin the Wheel Card */}
+        <Link
+          to="/spin-the-wheel"
+          className="block bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow"
         >
-          Spin the Wheel
-        </button>
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+            🎡 Spin the Wheel
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Add items to the wheel and let it decide for you. Perfect for making tough decisions!
+          </p>
+        </Link>
 
-        <h3 className="mt-6 mb-2 font-semibold text-lg text-gray-800 dark:text-gray-100">
-          Your Items:
-        </h3>
-        <ul className="list-disc list-inside text-gray-800 dark:text-gray-200">
-          {items.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
+        {/* Flip a Coin Card */}
+        <Link
+          to="/flip-a-coin"
+          className="block bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow"
+        >
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+            🪙 Flip a Coin
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Choose a coin type and flip it to see the result. Heads or tails? Let the coin decide!
+          </p>
+        </Link>
       </div>
     </main>
   );
 }
 
-export default SpinTheWheel;
+export default Home;
