@@ -26,6 +26,11 @@ html.dark nav a {
   color: #f7fafc;
 }
 
+html.dark h1 {
+  color: #f7fafc;
+}
+
+
 html.dark .card {
   background-color: #2d3748;
 }
