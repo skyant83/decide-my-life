@@ -35,3 +35,19 @@ nav,
 .card {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+.coin-flip-animation {
+  animation: flip 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
