@@ -1,17 +1,50 @@
 import React, { useState } from 'react';
+import { Wheel } from 'react-custom-roulette';
 
 function MainContent() {
   const [textareaValue, setTextareaValue] = useState('');
-  const items = textareaValue.split('\n').filter((item) => item.trim() !== '');
+  const [mustSpin, setMustSpin] = useState(false)
+  const [prizeNumber, setPrizeNumber] = useState(0)
+  const [decision, setDecision] = useState('What will win?')
 
-  const spinWheel = () => {
-    if (items.length === 0) {
-      alert('Please add items to spin the wheel!');
-      return;
+  const items = textareaValue.split('\n').filter((item) => item.trim() !== '');
+  const itemData = items.map(item => ({ option: item }));
+
+  const handleSpin = () => {
+    if (!mustSpin && items.length > 0) {
+      const winner = Math.floor(Math.random() * items.length);
+      setDecision('What will win?');
+      setPrizeNumber(winner);
+      setMustSpin(true);
     }
-    const randomIndex = Math.floor(Math.random() * items.length);
-    alert(`The wheel landed on: ${items[randomIndex]}`);
-  };
+
+    else {
+      if (mustSpin){
+        alert('Please wait for the wheel to stop');
+      }
+      else if (items.length == 0){
+        alert('Please add items to spin the wheel!');
+      }
+    }
+  }
+
+  var wheelDisplay = null
+
+  if (items.length > 0) {
+    wheelDisplay = (
+      <Wheel
+        mustStartSpinning={mustSpin}
+        prizeNumber={prizeNumber}
+        data={itemData}
+        backgroundColors={['#FFD700', '#FF8C00']}
+        textColors={['#000']}
+        onStopSpinning={() => {
+          setMustSpin(false);
+          setDecision(`${items[prizeNumber]} won!`)
+        }}
+      />
+    );
+  }
 
   return (
     <main className="max-w-3xl mx-auto mt-12 px-4">
@@ -32,7 +65,7 @@ function MainContent() {
         />
 
         <button
-          onClick={spinWheel}
+          onClick={handleSpin}
           className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Spin the Wheel
@@ -46,6 +79,14 @@ function MainContent() {
             <li key={index}>{item}</li>
           ))}
         </ul>
+        <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded shadow-lg">
+            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 text-center">
+              {decision}
+            </h3>
+        </div>
+        <div className="flex justify-center items-center my-4">
+          {wheelDisplay}
+        </div>
       </div>
     </main>
   );
