@@ -22,7 +22,7 @@ function MainContent() {
       value={textareaValue}
       onChange={(e) => {
         setTextareaValue(e.target.value);
-        updateItemData(e.target.value, weightValue);
+        updateItemData(e.target.value, weightValue, checked);
       }}
       placeholder="Type one item per line..."
       className="w-full center p-2 rounded border dark:bg-gray-700 dark:text-white resize-none text-center w-64 truncate overflow-hidden text-ellipsis whitespace-nowrap"
@@ -35,7 +35,7 @@ function MainContent() {
       value={weightValue}
       onChange={(e) => {
         setWeightValue(e.target.value);
-        updateItemData(textareaValue, e.target.value);
+        updateItemData(textareaValue, e.target.value, checked);
       }}
       placeholder="Type one item per line..."
       className="w-full center p-2 rounded border dark:bg-gray-700 dark:text-white resize-none text-center w-64 truncate overflow-hidden text-ellipsis whitespace-nowrap"
