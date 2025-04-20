@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Wheel } from 'react-custom-roulette';
 
 function MainContent() {
-  const [textareaValue, setTextareaValue] = useState('');
-  const [weightValue, setWeightValue] = useState('');
+  const [textareaValue, setTextareaValue] = useState('Hello!\n');
+  const [weightValue, setWeightValue] = useState('1\n');
   const [itemData, setItemData] = useState([]);
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -126,7 +126,12 @@ function MainContent() {
           </button>
         </div>
 
-        <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">Your Items:</h3>
+        <div className="flex flex-row justify-center items-center gap-12">
+          <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">Your Items:</h3>
+          {checked && (
+            <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">Weights:</h3>
+          )}
+        </div>
 
         <div className="flex flex-col justify-center items-center">
           {items.map((item, index) => (
