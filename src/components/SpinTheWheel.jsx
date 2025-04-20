@@ -42,37 +42,37 @@ function MainContent() {
     />
   );
 
-  const updateItemData = (textarea, weightsInput) => {
+  const updateItemData = (textarea, weightsInput, useWeights) => {
+    setItemData([]);
+  
     const itemsList = textarea
       .split('\n')
       .map((item) => item.trim())
       .filter((item) => item !== '');
-
-    if (checked) {
+  
+    if (useWeights) {
       const parsedWeights = weightsInput
         .split('\n')
         .map((w) => parseFloat(w.trim()) || 1);
-
+  
       setWeights(parsedWeights);
-
+  
       const combined = itemsList.map((item, i) => ({
         option: item,
         optionSize: parsedWeights[i] ?? 1,
       }));
-
+  
       setItemData(combined);
     } else {
-      setItemData(
-        itemsList.map((item) => ({
-          option: item
-        }))
-      );
+      setItemData(itemsList.map((item) => ({ option: item })));
     }
   };
 
   const handleCheck = () => {
-    setChecked(!checked);
-    updateItemData(textareaValue, weightValue); 
+    const newChecked = !checked;
+    setChecked(newChecked);
+    setItemData([]);
+    updateItemData(textareaValue, weightValue, newChecked); 
   };
 
   const handleSpin = () => {
@@ -84,7 +84,7 @@ function MainContent() {
     } else {
       if (mustSpin) {
         alert('Please wait for the wheel to stop');
-      } else if (items.length === 0) {
+      } else if (items.length == 0) {
         alert('Please add items to spin the wheel!');
       }
     }
