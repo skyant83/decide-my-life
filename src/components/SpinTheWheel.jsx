@@ -43,36 +43,46 @@ function MainContent() {
   );
 
   const updateItemData = (textarea, weightsInput, useWeights) => {
-    setItemData([]);
-  
     const itemsList = textarea
       .split('\n')
       .map((item) => item.trim())
       .filter((item) => item !== '');
-  
+
+    const generateBrightColor = () => {
+      const r = Math.floor(Math.random() * 156) + 100; // Red: 100-255
+      const g = Math.floor(Math.random() * 156) + 100; // Green: 100-255
+      const b = Math.floor(Math.random() * 156) + 100; // Blue: 100-255
+      return `rgb(${r}, ${g}, ${b})`;
+    };
+
     if (useWeights) {
       const parsedWeights = weightsInput
         .split('\n')
         .map((w) => parseFloat(w.trim()) || 1);
-  
+
       setWeights(parsedWeights);
-  
+
       const combined = itemsList.map((item, i) => ({
         option: item,
         optionSize: parsedWeights[i] ?? 1,
+        style: { backgroundColor: generateBrightColor() },
       }));
-  
+
       setItemData(combined);
     } else {
-      setItemData(itemsList.map((item) => ({ option: item })));
+      setItemData(
+        itemsList.map((item) => ({
+          option: item,
+          style: { backgroundColor: generateBrightColor() },
+        }))
+      );
     }
   };
 
   const handleCheck = () => {
     const newChecked = !checked;
     setChecked(newChecked);
-    setItemData([]);
-    updateItemData(textareaValue, weightValue, newChecked); 
+    updateItemData(textareaValue, weightValue, newChecked);
   };
 
   const handleSpin = () => {
@@ -84,7 +94,7 @@ function MainContent() {
     } else {
       if (mustSpin) {
         alert('Please wait for the wheel to stop');
-      } else if (items.length == 0) {
+      } else if (items.length === 0) {
         alert('Please add items to spin the wheel!');
       }
     }
@@ -102,7 +112,6 @@ function MainContent() {
     />
   );
 
-
   return (
     <main className="max-w-3xl mx-auto mt-12 px-4">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
@@ -110,41 +119,56 @@ function MainContent() {
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">
           Add items below, one per line, and spin the wheel to make a decision!
         </p>
-        <div className='flex flex-row items-center justify-center gap-4'>
+        <div className="flex flex-row items-center justify-center gap-4">
           <div>{inputArea}</div>
           <div>{weightInput}</div>
         </div>
         <div className="flex flex-row items-center justify-center gap-4">
-          <button onClick={handleSpin} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+          <button
+            onClick={handleSpin}
+            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
             Spin the Wheel
           </button>
           <button
             onClick={handleCheck}
-            className={`mt-4 px-4 py-2 rounded text-white ${checked ? 'bg-green-500' : 'bg-gray-500'}`}
+            className={`mt-4 px-4 py-2 rounded text-white ${
+              checked ? 'bg-green-500' : 'bg-gray-500'
+            }`}
           >
             {checked ? '✅ Enabled Weights' : '☐ Use custom weights?'}
           </button>
         </div>
 
         <div className="flex flex-row justify-center items-center gap-12">
-          <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">Your Items:</h3>
+          <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">
+            Your Items:
+          </h3>
           {checked && (
-            <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">Weights:</h3>
+            <h3 className="mt-6 mb-2 font-semibold text-lg text-center text-gray-800 dark:text-gray-100">
+              Weights:
+            </h3>
           )}
         </div>
 
         <div className="flex flex-col justify-center items-center">
           {items.map((item, index) => (
-            <div className="flex flex-row justify-center items-center gap-4">
-              <div className="mt-4 w-32 text-black border-2 border-solid border-black px-4 py-2 rounded hover:bg-blue-600 text-center truncate overflow-hidden text-ellipsis whitespace-nowrap">{item}</div>
+            <div key={index} className="flex flex-row justify-center items-center gap-4">
+              <div className="mt-4 w-32 text-black border-2 border-solid border-black px-4 py-2 rounded hover:bg-blue-600 text-center truncate overflow-hidden text-ellipsis whitespace-nowrap">
+                {item}
+              </div>
               {checked && (
-                <div className="mt-4 w-32 text-black border-2 border-solid border-black px-4 py-2 rounded hover:bg-blue-600 text-center truncate overflow-hidden text-ellipsis whitespace-nowrap">{weights[index]}</div>)      
-              }        
+                <div className="mt-4 w-32 text-black border-2 border-solid border-black px-4 py-2 rounded hover:bg-blue-600 text-center truncate overflow-hidden text-ellipsis whitespace-nowrap">
+                  {weights[index]}
+                </div>
+              )}
             </div>
           ))}
         </div>
         <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-2 rounded shadow-lg">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 text-center">{decision}</h3>
+          <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 text-center">
+            {decision}
+          </h3>
         </div>
         <div className="flex justify-center items-center my-4">{wheelDisplay}</div>
       </div>
