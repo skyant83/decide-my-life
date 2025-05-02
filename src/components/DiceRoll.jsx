@@ -25,7 +25,7 @@ export default function DiceRoll() {
     <div className="App">
       <center>
         <div className="container">
-          <h1>LET'S GO GAMBLING!</h1>
+          <h1>LET'S GO GAMBLING! 🤑</h1>
           <div style={{ height: '20px'}}></div>
           <img className="square" src={image} alt="dice 1" />
           <div style={{ width: '5px', display: 'inline-block' }}></div>
