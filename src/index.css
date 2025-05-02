@@ -51,3 +51,21 @@ nav,
     transform: rotateY(360deg);
   }
 }
+
+/* for dice */
+.container {
+  background-color: white;
+  padding: 2rem;
+  margin: 5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px lightgrey;
+  max-width: 700px;
+}
+
+/* hardcoding this lowkey a bad idea but hey */
+.square {
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+  padding: 1rem 1rem;
+}

@@ -25,6 +25,14 @@ function Navbar({ darkMode, toggleDarkMode }) {
               Flip a Coin
             </Link>
           </li>
+          <li>
+            <Link
+              to="/dice-roll"
+              className="text-gray-800 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            >
+              Roll Dice
+            </Link>
+          </li>
         </ul>
         <button
           onClick={toggleDarkMode}
