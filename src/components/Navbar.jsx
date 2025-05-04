@@ -1,48 +1,81 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { themeChange } from 'theme-change';
 
-function Navbar({ darkMode, toggleDarkMode }) {
+
+function Navbar() {
+	const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'nord')
+
+  useEffect(() => {
+    // initialize theme-change (false = don’t sync with system pref)
+    themeChange(false);
+		const observer = new MutationObserver(() => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme);
+			console.log(currentTheme);
+
+    });
+
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // return () => observer.disconnect()
+  }, []);
+
+	const handleThemeSet = (newTheme) => {
+		document.documentElement.setAttribute('data-theme', newTheme)
+		localStorage.setItem('theme', newTheme)
+		setTheme(newTheme)
+	}
+
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center sticky top-0 z-10 transition-colors duration-300">
-      <Link to="/" className="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
-        🎲 Decide My Life 🎲
-      </Link>
-      <div className="flex items-center gap-4">
-        <ul className="flex space-x-4">
-          <li>
-            <Link
-              to="/spin-the-wheel"
-              className="text-gray-800 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            >
-              Spin the Wheel
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/flip-a-coin"
-              className="text-gray-800 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            >
-              Flip a Coin
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dice-roll"
-              className="text-gray-800 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-            >
-              Roll Dice
-            </Link>
-          </li>
-        </ul>
-        <button
-          onClick={toggleDarkMode}
-          className="text-xl text-gray-800 dark:text-gray-100 focus:outline-none transition-all"
-          title="Toggle Dark Mode"
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
+    <div className="navbar bg-neutral shadow-md sticky top-0 z-10">
+      <div className="flex-1">
+        <Link to="/"
+					className="normal-case text-xl text-neutral-content"
+					style={{ textDecoration: 'none' }}>
+          🎲 Decide My Life 🎲
+        </Link>
       </div>
-    </nav>
+      <div className="flex-none flex items-center space-x-2">
+        <ul className="menu menu-horizontal m-auto">
+          <li><Link to="/spin-the-wheel"
+						className='text-neutral-content'
+						style={{ textDecoration: 'none' }}>Spin the Wheel</Link></li>
+          <li><Link to="/flip-a-coin"
+						className='text-neutral-content'
+						style={{ textDecoration: 'none' }}>Flip a Coin</Link></li>
+          <li><Link to="/dice-roll"
+						className='text-neutral-content'
+						style={{ textDecoration: 'none' }}>Roll Dice</Link></li>
+        </ul>
+        {/* Theme Toggle Buttons */}
+				{theme === 'business' && (
+					<button className="menu"
+						// data-set-theme="nord"
+						// data-act-class="ACTIVE"
+						title="Light Mode"
+						style={{paddingRight:20}}
+						// data-key='theme'
+						onClick={() => {handleThemeSet('nord')}}
+					>
+						☀️
+					</button>
+				)}
+				{theme === 'nord' && (
+					<button
+						className="menu"
+						style={{paddingRight:20}}
+						// data-set-theme="business"
+						// data-act-class="ACTIVE"
+						title="Dark Mode"
+						// data-key='theme'
+						onClick={() => {handleThemeSet('business')}}
+						>
+						🌙
+					</button>
+				)}
+      </div>
+    </div>
   );
 }
 

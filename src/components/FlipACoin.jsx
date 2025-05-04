@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import headsImage from '../assets/heads.jpg';
+import tailsImage from '../assets/tails.jpg';
+import audio from '../assets/coin-flip.mp3';
 
 function FlipACoin() {
   const [result, setResult] = useState(null);
   const [coinType, setCoinType] = useState('Heads/Tails');
   const [isFlipping, setIsFlipping] = useState(false);
-  const [currentImage, setCurrentImage] = useState('/assets/heads.jpg');
-  const [customOptions, setCustomOptions] = useState(['Option 1', 'Option 2']);
+  const [currentImage, setCurrentImage] = useState(headsImage);
+  const [customOptions, setCustomOptions] = useState([]);
   const [newOption, setNewOption] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [flipDuration] = useState(120);
-  const headsImage = '/assets/heads.jpg';
-  const tailsImage = '/assets/tails.jpg';
+	const [flips, setFlips] = useState(0);
+	const imgRef = useRef(null);
 
   const coinOptions = {
     'Heads/Tails': ['Heads', 'Tails'],
@@ -19,55 +22,70 @@ function FlipACoin() {
     Custom: customOptions,
   };
 
-  const flipSound = new Audio('/assets/coin-flip.mp3');
+  const flipSound = new Audio(audio);
 
   const flipCoin = () => {
-    const outcomes = coinOptions[coinType];
+		const outcomes = coinOptions[coinType];
+
+		imgRef.current = document.getElementById('img')
+		console.log(imgRef.current);
+		setTimeout(function () {
+			imgRef.current?.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+			});
+		}, 100);
 
     if (isFlipping) return;
 
     if (coinType === 'Custom' && customOptions.length < 2) {
-      setErrorMessage('Please add at least 2 custom options.');
+			setErrorMessage('Please add at least 2 custom options.');
       return;
     }
 
     if (outcomes.length === 0) {
-      setErrorMessage('Please add options before flipping the coin.');
+			setErrorMessage('Please add options before flipping the coin.');
       return;
     }
 
     setErrorMessage('');
 
-    const flips = Math.floor(Math.random() * 10) + 6;
+    const count = Math.floor(Math.random() * 10) + 6;
+    setFlips(count);
     setIsFlipping(true);
 
     if (soundEnabled) {
-      flipSound.currentTime = 0;
+			flipSound.currentTime = 0;
       flipSound.play().catch((error) => {
-        console.error('Error playing the coin flip sound:', error);
+				console.error('Error playing the coin flip sound:', error);
       });
     }
 
     let flipCount = 0;
+    const singleMs = Math.min(Math.max(flipDuration, 100), 300);
     const flipInterval = setInterval(() => {
-      setCurrentImage((prevImage) =>
-        prevImage === headsImage ? tailsImage : headsImage
-      );
+			setCurrentImage(prev => prev === headsImage ? tailsImage : headsImage);
       flipCount++;
-      if (flipCount >= flips) {
-        clearInterval(flipInterval);
+      if (flipCount >= count) {
+				clearInterval(flipInterval);
         const randomIndex = Math.floor(Math.random() * outcomes.length);
         const finalResult = outcomes[randomIndex];
         setResult(finalResult);
         setCurrentImage(finalResult === 'Heads' ? headsImage : tailsImage);
         setIsFlipping(false);
-      }
-    }, Math.min(Math.max(flipDuration, 100), 300)); // Ensure flip duration is between 100ms and 300ms
+				setTimeout(function () {
+					console.log(document.getElementById('result'))
+					let item = document.getElementById('result')
+					let offset = item.offsetTop-window.scrollY-400
+					window.scrollBy({top: offset, left: 0, behavior: 'smooth'})
+				}, 100);
+			}
+		}, singleMs);
   };
 
   const addCustomOption = () => {
-    if (newOption.trim() === '') {
-      setErrorMessage('Option cannot be empty.');
+		if (newOption.trim() === '') {
+			setErrorMessage('Option cannot be empty.');
       return;
     }
 
@@ -87,11 +105,11 @@ function FlipACoin() {
 
   return (
     <main className="max-w-4xl mx-auto mt-12 px-4">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
+      <div className="bg-base-100 shadow-lg rounded-2xl p-8 transition-shadow hover:shadow-xl">
+        <h2 className="text-4xl font-bold mb-6 text-center text-base-content">
           Flip a Coin
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 text-lg text-center mb-8">
+        <p className="text-base-content/70 text-lg text-center mb-8">
           Select a coin type, flip it, and let fate decide!
         </p>
 
@@ -99,7 +117,7 @@ function FlipACoin() {
           <select
             value={coinType}
             onChange={(e) => setCoinType(e.target.value)}
-            className="p-4 border-2 border-blue-500 rounded-lg dark:bg-gray-700 dark:text-white text-lg focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
+            className="p-4 border-2 border-blue-500 rounded-lg text-base-content text-lg focus:outline-none focus:ring-4 focus:ring-blue-400 transition"
             aria-label="Select Coin Type"
           >
             <option value="Heads/Tails">Heads/Tails</option>
@@ -181,26 +199,31 @@ function FlipACoin() {
             )}
           </button>
 
-          <div className="relative w-96 h-96">
-            <img
-              src={currentImage}
-              alt={result || 'Coin'}
-              className={`w-full h-full object-cover rounded-full shadow-lg ${
-                isFlipping ? 'coin-flip-animation' : ''
-              }`}
-            />
+          <div className="relative" style={{width:15+'rem'}}>
+						<img
+							id='img'
+							src={currentImage}
+							alt={result || 'Coin'}
+							className="w-full h-full object-cover rounded-full shadow-lg"
+							style={{
+								animation: isFlipping
+									? `flip ${flipDuration}ms ease-in-out ${flips}`
+									: 'none'
+							}}
+						/>
           </div>
         </div>
 
         {result && !isFlipping && (
           <div
-            className="mt-8 bg-gray-100 dark:bg-gray-700 p-6 rounded shadow-lg text-center"
+            className="mt-8 bg-base-100 p-6 rounded shadow-lg text-center"
             aria-live="polite"
+						id='result'
           >
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            <h3 className="text-2xl font-bold text-base-content">
               Result: {result}
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg">
+            <p className="text-base-content/70 text-lg">
               You flipped a {coinType} coin.
             </p>
           </div>

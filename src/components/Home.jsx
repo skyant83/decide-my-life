@@ -1,57 +1,69 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { themeChange } from 'theme-change';
 
 function Home() {
-  return (
-    <main className="max-w-6xl mx-auto mt-12 px-4 text-center">
-      <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-        Welcome to Decide My Life!
-      </h1>
-      <p className="text-lg text-gray-600 dark:text-gray-200 mb-8">
-        Struggling to make decisions? Let us help you! Use our tools to spin the wheel or flip a coin and let fate decide for you.
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Spin the Wheel Card */}
-        <Link
-          to="/spin-the-wheel"
-          className="block bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-            🎡 Spin the Wheel
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            Add items to the wheel and let it decide for you. Perfect for making tough decisions!
-          </p>
-        </Link>
+	useEffect(() => {
+		// initialize theme-change library (false = do not watch system preference)
+		themeChange(false);
+	}, []);
 
-        {/* Flip a Coin Card */}
-        <Link
-          to="/flip-a-coin"
-          className="block bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-            🪙 Flip a Coin
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            Choose a coin type and flip it to see the result. Heads or tails? Let the coin decide!
-          </p>
-        </Link>
+	return (
+		<main className="max-w-6xl mx-auto mt-12 px-4 text-center">
+			<h1 className="text-4xl font-bold text-base-content mb-6">
+				Welcome to Decide My Life!
+			</h1>
+			<p className="text-lg text-base-content opacity-70 mb-8">
+				Struggling to make decisions? Let us help you! Use our tools to spin the
+				wheel or flip a coin and let fate decide for you.
+			</p>
+			<div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+				{/* Spin the Wheel Card */}
+				<Link
+					to="/spin-the-wheel"
+					className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow"
+					style={{ textDecoration: 'none' }}
+				>
+					<div className="card-body bg-base-content items-center text-center">
+						<h2 className="card-title">🎡 Spin the Wheel</h2>
+						<p className='text-base-100'>
+							Add items to the wheel and let it decide for you. Perfect for making
+							tough decisions!
+						</p>
+					</div>
+				</Link>
 
-        {/* Roll a Die Card */}
-        <Link
-          to="/dice-roll"
-          className="block bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 hover:shadow-xl transition-shadow"
-        >
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
-            🎲 Roll a Die
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            Throw two 6-sided die (results from 2-12). So let's GO GAMBLING!! 🤑
-          </p>
-        </Link>
-      </div>
-    </main>
-  );
+				{/* Flip a Coin Card */}
+				<Link
+					to="/flip-a-coin"
+					className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow"
+					style={{ textDecoration: 'none' }}
+				>
+					<div className="card-body bg-base-content items-center text-center">
+						<h2 className="card-title">📀 Flip a Coin</h2>
+						<p className='text-base-100'>
+							Choose a coin type and flip it to see the result. Heads or tails?
+							Let the coin decide!
+						</p>
+					</div>
+				</Link>
+
+				{/* Roll a Die Card */}
+				<Link
+					to="/dice-roll"
+					className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow"
+					style={{ textDecoration: 'none' }}
+				>
+					<div className="card-body bg-base-content items-center text-center">
+						<h2 className="card-title">🎲 Roll a Die</h2>
+						<p className='text-base-100'>
+							Throw two 6-sided dice (results from 2-12). Ready to roll the dice?
+						</p>
+					</div>
+				</Link>
+			</div>
+		</main>
+	);
 }
 
 export default Home;
