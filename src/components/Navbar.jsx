@@ -6,20 +6,20 @@ import { themeChange } from 'theme-change';
 function Navbar() {
 	const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'nord')
 
-  useEffect(() => {
-    // initialize theme-change (false = don’t sync with system pref)
-    themeChange(false);
+	useEffect(() => {
+		// initialize theme-change (false = don’t sync with system pref)
+		themeChange(false);
 		const observer = new MutationObserver(() => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      setTheme(currentTheme);
+			const currentTheme = document.documentElement.getAttribute('data-theme');
+			setTheme(currentTheme);
 			console.log(currentTheme);
 
-    });
+		});
 
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-    // return () => observer.disconnect()
-  }, []);
+		// return () => observer.disconnect()
+	}, []);
 
 	const handleThemeSet = (newTheme) => {
 		document.documentElement.setAttribute('data-theme', newTheme)
@@ -27,28 +27,28 @@ function Navbar() {
 		setTheme(newTheme)
 	}
 
-  return (
-    <div className="navbar bg-neutral shadow-md sticky top-0 z-10">
-      <div className="flex-1">
-        <Link to="/"
+	return (
+		<div className="navbar bg-neutral shadow-md sticky top-0 z-10">
+			<div className="flex-1">
+				<Link to="/"
 					className="normal-case text-xl text-neutral-content"
 					style={{ textDecoration: 'none' }}>
-          🎲 Decide My Life 🎲
-        </Link>
-      </div>
-      <div className="flex-none flex items-center space-x-2">
-        <ul className="menu menu-horizontal m-auto">
-          <li><Link to="/spin-the-wheel"
+					🎲 Decide My Life 🎲
+				</Link>
+			</div>
+			<div className="flex-none flex items-center space-x-2">
+				<ul className="menu menu-horizontal m-auto">
+					<li><Link to="/spin-the-wheel"
 						className='text-neutral-content'
 						style={{ textDecoration: 'none' }}>Spin the Wheel</Link></li>
-          <li><Link to="/flip-a-coin"
+					<li><Link to="/flip-a-coin"
 						className='text-neutral-content'
 						style={{ textDecoration: 'none' }}>Flip a Coin</Link></li>
-          <li><Link to="/dice-roll"
+					<li><Link to="/dice-roll"
 						className='text-neutral-content'
 						style={{ textDecoration: 'none' }}>Roll Dice</Link></li>
-        </ul>
-        {/* Theme Toggle Buttons */}
+				</ul>
+				{/* Theme Toggle Buttons */}
 				{theme === 'business' && (
 					<button className="menu"
 						// data-set-theme="nord"
@@ -74,9 +74,9 @@ function Navbar() {
 						🌙
 					</button>
 				)}
-      </div>
-    </div>
-  );
+			</div>
+		</div>
+	);
 }
 
 export default Navbar;

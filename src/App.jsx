@@ -9,22 +9,22 @@ import Footer from './components/Footer.jsx';
 import DiceRoll from './components/DiceRoll.jsx';
 
 function App() {
-  // const [darkMode, toggleDarkMode] = useDarkMode();
+	// const [darkMode, toggleDarkMode] = useDarkMode();
 
-  return (
-    <Router>
-      <div className="min-h-screen transition-colors duration-300 font-sans bg-base-300">
-        <Navbar/>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/spin-the-wheel" element={<SpinTheWheel />} />
-          <Route path="/flip-a-coin" element={<FlipACoin />} />
-          <Route path="/dice-roll" element={<DiceRoll />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
-  );
+	return (
+		<Router>
+			<div className="min-h-screen transition-colors duration-300 font-sans bg-base-300">
+				<Navbar/>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/spin-the-wheel" element={<SpinTheWheel />} />
+					<Route path="/flip-a-coin" element={<FlipACoin />} />
+					<Route path="/dice-roll" element={<DiceRoll />} />
+				</Routes>
+				<Footer />
+			</div>
+		</Router>
+	);
 }
 
 export default App;

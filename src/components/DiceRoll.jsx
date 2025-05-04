@@ -11,20 +11,20 @@ import '../index.css';
 import 'rsuite/Slider/styles/index.css';
 
 export default function DiceRoll() {
-  const diceImages = [
-    dice1,
-    dice2,
-    dice3,
-    dice4,
-    dice5,
-    dice6,
-  ];
+	const diceImages = [
+		dice1,
+		dice2,
+		dice3,
+		dice4,
+		dice5,
+		dice6,
+	];
 
-  const [image, setNewImage] = useState(diceImages[0]);
-  const [image2, setNewImage2] = useState(diceImages[1]);
+	const [image, setNewImage] = useState(diceImages[0]);
+	const [image2, setNewImage2] = useState(diceImages[1]);
 	const [seconds, setSeconds] = useState(5);
 
-  const rollDice = () => {
+	const rollDice = () => {
 		let count = 0;
 		const interval = setInterval(() => {
 			const tempNum1 = Math.floor(Math.random() * 6);
@@ -44,11 +44,11 @@ export default function DiceRoll() {
 		}, 100); // 100ms between frames
 	};
 
-  return (
-    <div className="App">
-      <center>
-        <div className="container">
-          <h1>LET'S GO GAMBLING! 🤑</h1>
+	return (
+		<div className="App">
+			<center>
+				<div className="container">
+					<h1>LET'S GO GAMBLING! 🤑</h1>
 						<br/>
 					<div className='items-center' style={{marginInline:20+'rem'}}>
 						<Slider
@@ -62,10 +62,10 @@ export default function DiceRoll() {
 						}}
 						/>
 					</div>
-          <div style={{ height: '20px'}}></div>
-          <img className="square" src={image} alt="dice 1" />
-          <div style={{ width: '5px', display: 'inline-block' }}></div>
-          <img className="square" src={image2} alt="dice 2" />
+					<div style={{ height: '20px'}}></div>
+					<img className="square" src={image} alt="dice 1" />
+					<div style={{ width: '5px', display: 'inline-block' }}></div>
+					<img className="square" src={image2} alt="dice 2" />
 					<br/>
 					<button
 						type="button"
@@ -74,8 +74,8 @@ export default function DiceRoll() {
 					>
 						Roll Dice
 					</button>
-        </div>
-      </center>
-    </div>
-  );
+				</div>
+			</center>
+		</div>
+	);
 }
